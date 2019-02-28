@@ -14,23 +14,22 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AnimalsViewHolder extends RecyclerView.ViewHolder {
     public static final String LINK = "link";
+    public static final String NAME = "name";
+    public static final String IMAGE = "image";
 
     private CircleImageView animalImage;
     private TextView animalNameTextView;
-    private TextView animalLinkTextView;
 
     public AnimalsViewHolder(@NonNull final View itemView) {
         super(itemView);
 
         animalImage = itemView.findViewById(R.id.animal_image_view);
         animalNameTextView = itemView.findViewById(R.id.animal_name_text_view);
-        animalLinkTextView = itemView.findViewById(R.id.animal_link_text_view);
 
     }
 
     public void onBind(final Animals animals){
         String animalName = animals.getAnimal();
-        String animalLink = animals.getWiki();
 
         Picasso.get()
                 .load(animals.getImage())
@@ -43,6 +42,8 @@ public class AnimalsViewHolder extends RecyclerView.ViewHolder {
             public void onClick(View v) {
                 Intent intent = new Intent(itemView.getContext(), SecondActivity.class);
                 intent.putExtra(LINK, animals.getWiki());
+                intent.putExtra(IMAGE, animals.getImage());
+                intent.putExtra(NAME, animals.getAnimal());
                 itemView.getContext().startActivity(intent);
             }
         });

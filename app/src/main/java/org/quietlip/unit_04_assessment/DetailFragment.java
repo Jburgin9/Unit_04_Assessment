@@ -7,46 +7,46 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link DisplayFragment.OnFragmentInteractionListener} interface
+ * {@link DetailFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link DisplayFragment#newInstance} factory method to
+ * Use the {@link DetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DisplayFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class DetailFragment extends Fragment {
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private static final String ANIMAL_NAME = "name";
+    private static final String ANIMAL_LINK = "link";
+    public static final String ANIMAL_IMAGE = "image";
+
+    private String aName;
+    private String aLink;
+    private String aImage;
+
+    private TextView fragmentAnimalName;
+    private Button fragmentWebsiteButton;
+    private CircleImageView fragmentAnimalImage;
 
     private OnFragmentInteractionListener mListener;
 
-    public DisplayFragment() {
-        // Required empty public constructor
-    }
+    public DetailFragment() {}
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DisplayFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DisplayFragment newInstance(String param1, String param2) {
-        DisplayFragment fragment = new DisplayFragment();
+    public static DetailFragment newInstance(String name, String link, String image) {
+        DetailFragment fragment = new DetailFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ANIMAL_NAME, name);
+        args.putString(ANIMAL_LINK, link);
+        args.putString(ANIMAL_IMAGE, image);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,22 +55,32 @@ public class DisplayFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            aName = getArguments().getString(ANIMAL_NAME);
+            aLink = getArguments().getString(ANIMAL_LINK);
+            aImage = getArguments().getString(ANIMAL_IMAGE);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_display, container, false);
+       View view = inflater.inflate(R.layout.fragment_display, container, false);
+
+       fragmentWebsiteButton = view.findViewById(R.id.website_button);
+       fragmentAnimalName = view.findViewById(R.id.animal_name_text_view);
+       fragmentAnimalImage = view.findViewById(R.id.fragment_image_view);
+
+        Picasso.get()
+                .load(aImage)
+                .into(fragmentAnimalImage);
+
+       return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentInteraction(aLink);
         }
     }
 
@@ -103,6 +113,6 @@ public class DisplayFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(String website);
     }
 }
