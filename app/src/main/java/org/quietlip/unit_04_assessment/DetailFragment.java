@@ -71,6 +71,8 @@ public class DetailFragment extends Fragment {
        fragmentAnimalName = view.findViewById(R.id.animal_name_text_view);
        fragmentAnimalImage = view.findViewById(R.id.fragment_image_view);
 
+//       fragmentAnimalName.setText(aName);
+
         Picasso.get()
                 .load(aImage)
                 .into(fragmentAnimalImage);
