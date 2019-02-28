@@ -1,6 +1,7 @@
 package org.quietlip.unit_04_assessment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -74,13 +75,22 @@ public class DetailFragment extends Fragment {
                 .load(aImage)
                 .into(fragmentAnimalImage);
 
+        fragmentWebsiteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onButtonPressed(aLink);
+            }
+        });
+
        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    public void onButtonPressed(String website) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(aLink);
+            mListener.onFragmentInteraction(website);
+            Intent webIntent = new Intent(Intent.ACTION_VIEW);
+            webIntent.setData(Uri.parse(website));
+            startActivity(webIntent);
         }
     }
 
